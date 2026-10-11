@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Math of Us - For Relin</title>
+    <style>
+        body {
+            background-color: #ffe6ea; /* لون Baby Pink هادي */
+            font-family: 'Georgia', serif;
+            text-align: center;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        h1 { 
+            color: #d6336c; 
+            font-style: italic; 
+            margin-bottom: 5px; 
+            font-size: 2.5rem;
+        }
+        h2 { 
+            color: #a61e4d; 
+            font-weight: normal; 
+            margin-top: 0; 
+            font-size: 1.5rem;
+        }
+        .math-text { 
+            font-family: 'Courier New', monospace; 
+            color: #5c0029; 
+            font-weight: bold; 
+            font-size: 1.2rem; 
+            margin: 10px; 
+            background: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        canvas { 
+            background: transparent; 
+            margin: 10px 0;
+        }
+        .message { 
+            color: #d6336c; 
+            font-size: 1.5rem; 
+            font-style: italic; 
+            margin-top: 15px; 
+            opacity: 0; /* مخفية لحد ما القلب يترسم */
+            transition: opacity 2s ease-in-out; 
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Happy Birthday Relin (Iyin) ❤️</h1>
+    <h2>Untuk Sayangku... Adik</h2>
+    
+    <div class="math-text">
+        x(t) = 16 sin³(t) <br>
+        y(t) = 13 cos(t) - 5 cos(2t) - 2 cos(3t) - cos(4t)
+    </div>
+
+    <!-- المساحة اللي هيترسم فيها القلب -->
+    <canvas id="heartCanvas" width="450" height="400"></canvas>
+    
+    <div class="math-text">
+        lim (t → ∞) f(t) = My Love for You
+    </div>
+
+    <div class="message" id="finalMessage">
+        Differentiate everything you want, but my love for you never decreases.<br>
+        <strong>12 October - Tifa</strong>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const scale = 12; // حجم القلب
+
+        let t = 0;
+        ctx.beginPath();
+        ctx.strokeStyle = '#e64980'; // لون رسم القلب
+        ctx.lineWidth = 3;
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = '#d6336c'; // تأثير إضاءة خفيف
+
+        function drawHeart() {
+            // رسم القلب ببطء
+            if (t <= Math.PI * 2) {
+                // معادلات القلب الرياضية
+                const x = 16 * Math.pow(Math.sin(t), 3);
+                const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+                
+                const drawX = centerX + x * scale;
+                const drawY = centerY - y * scale; // عكس الـ Y عشان الإحداثيات
+
+                if (t === 0) ctx.moveTo(drawX, drawY);
+                else ctx.lineTo(drawX, drawY);
+                
+                ctx.stroke();
+                t += 0.03; // سرعة الرسم
+                requestAnimationFrame(drawHeart);
+            } else {
+                // تلوين القلب من جوه بعد ما الرسم يخلص
+                ctx.fillStyle = "rgba(230, 73, 128, 0.3)";
+                ctx.fill();
+                // إظهار الرسالة النهائية
+                document.getElementById('finalMessage').style.opacity = 1;
+            }
+        }
+        
+        // تأخير بسيط ثانية قبل ما الرسم يبدأ عشان تلحق تركز معاه
+        setTimeout(drawHeart, 1000);
+    </script>
+</body>
+</html>
